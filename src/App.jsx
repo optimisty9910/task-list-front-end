@@ -1,4 +1,6 @@
 import TaskList from './components/TaskList.jsx';
+import AddTask from './components/AddTask.jsx';
+import {useState} from 'react';
 import './App.css';
 
 const TASKS = [
@@ -15,13 +17,30 @@ const TASKS = [
 ];
 
 const App = () => {
+  const [tasks, setTasks] = useState(TASKS);
+
+  const handleAddTask = (newTaskTitle) => {
+    const newTask = {
+      id: Date.now(),
+      title: newTaskTitle,
+      isComplete: false,
+    };
+
+    setTasks((previousTasks) => [
+      ...previousTasks,
+      newTask,
+    ]);
+  };
+
   return (
     <div className="App">
       <header className="App-header">
         <h1>Ada&apos;s Task List</h1>
       </header>
+
       <main>
-        <div>{<TaskList tasks={TASKS} />}</div>
+        <AddTask onAddTask={handleAddTask} />
+        <TaskList tasks={tasks} />
       </main>
     </div>
   );
