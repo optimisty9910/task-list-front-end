@@ -2,6 +2,7 @@ import TaskList from './components/TaskList.jsx';
 import AddTask from './components/AddTask.jsx';
 import {useState} from 'react';
 import './App.css';
+//import { describe } from 'vitest';
 
 const TASKS = [
   {
@@ -19,11 +20,12 @@ const TASKS = [
 const App = () => {
   const [tasks, setTasks] = useState(TASKS);
 
-  const handleAddTask = (newTaskTitle) => {
+  const handleAddTask = (newTaskData) => {
     const newTask = {
       id: Date.now(),
-      title: newTaskTitle,
-      isComplete: false,
+      title: newTaskData.title,
+      description: newTaskData.description,
+      isComplete: newTaskData.isComplete,
     };
 
     setTasks((previousTasks) => [
@@ -39,8 +41,8 @@ const App = () => {
       </header>
 
       <main>
-        <AddTask onAddTask={handleAddTask} />
         <TaskList tasks={tasks} />
+        <AddTask onAddTask={handleAddTask} />
       </main>
     </div>
   );
