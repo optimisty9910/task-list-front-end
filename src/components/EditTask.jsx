@@ -28,7 +28,7 @@ function EditTask({ title, description, onSave, onCancel }) {
         <input
           type="text"
           className="edit-input"
-          value={title}
+          value={newTitle}
           onChange={(e) => setNewTitle(e.target.value)}
           required
         />
