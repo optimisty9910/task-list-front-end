@@ -39,7 +39,7 @@ function EditTask({ title, description, onSave, onCancel }) {
         <textarea
           className="edit-textarea"
           rows={3}
-          value={description}
+          value={newDescription}
           onChange={(e) => setNewDescription(e.target.value)}
         />
       </label>
