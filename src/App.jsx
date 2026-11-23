@@ -1,22 +1,28 @@
+import { useState } from 'react';
 import TaskList from './components/TaskList.jsx';
 import AddTask from './components/AddTask.jsx';
-import {useState} from 'react';
 import SelectAll from './components/SelectAll.jsx';
 import ConfirmDialog from './components/ConfirmDialog.jsx';
 import { taskData } from './TaskDATA.js';
-import { useState } from 'react';
 import './App.css';
-//import { describe } from 'vitest';
 
 const App = () => {
-  const [tasks, setTasks] = useState(TASKS);
+  // Main source of truth for all tasks
+  const [tasks, setTasks] = useState(taskData);
 
+  // Track selected tasks
+  const [selectedIds, setSelectedIds] = useState([]);
+
+  // Track delete confirmation dialog
+  const [pendingDelete, setPendingDelete] = useState(null);
+
+  // Add a new task
   const handleAddTask = (newTaskData) => {
     const newTask = {
       id: Date.now(),
       title: newTaskData.title,
       description: newTaskData.description,
-      isComplete: newTaskData.isComplete,
+      complete: newTaskData.isComplete ?? false,
     };
 
     setTasks((previousTasks) => [
@@ -25,16 +31,12 @@ const App = () => {
     ]);
   };
 
-  const [tasks, setTasks] = useState(taskData);
+  // Task counts
   const taskCompleted = tasks.filter((task) => task.complete);
-
-  const [selectedIds, setSelectedIds] = useState([]);
-
-  const [pendingDelete, setPendingDelete] = useState(null);
-
   const totalCount = tasks.length;
   const selectedCount = selectedIds.length;
 
+  // Select or deselect an individual task
   const handleToogleSelect = (taskId) => {
     setSelectedIds((prevSelectedIds) =>
       prevSelectedIds.includes(taskId)
@@ -43,6 +45,7 @@ const App = () => {
     );
   };
 
+  // Select or deselect all tasks
   const handleToogleSelectAll = () => {
     setSelectedIds((prevSelectedIds) =>
       prevSelectedIds.length === tasks.length
@@ -51,66 +54,90 @@ const App = () => {
     );
   };
 
+  // Mark selected tasks as complete
   const handleMarkComplete = () => {
     setTasks((prev) =>
       prev.map((task) =>
-        selectedIds.includes(task.id) ? { ...task, complete: true } : task,
+        selectedIds.includes(task.id)
+          ? { ...task, complete: true }
+          : task,
       ),
     );
+
     setSelectedIds([]);
   };
 
+  // Delete selected tasks
   const handleDeleteSelected = () => {
-    setTasks((prev) => prev.filter((task) => !selectedIds.includes(task.id)));
+    setTasks((prev) =>
+      prev.filter((task) => !selectedIds.includes(task.id)),
+    );
+
     setSelectedIds([]);
   };
 
+  // Toggle individual task completion
   const handleCompleteTask = (taskId) => {
     setTasks((prev) =>
       prev.map((task) =>
-        task.id === taskId ? { ...task, complete: !task.complete } : task,
+        task.id === taskId
+          ? { ...task, complete: !task.complete }
+          : task,
       ),
     );
   };
 
+  // Delete an individual task
   const handleDeleteTask = (taskId) => {
-    setTasks((prev) => prev.filter((task) => task.id !== taskId));
+    setTasks((prev) =>
+      prev.filter((task) => task.id !== taskId),
+    );
+
     setSelectedIds((prevSelectedIds) =>
       prevSelectedIds.filter((id) => id !== taskId),
     );
   };
 
+  // Edit an individual task
   const handleEditTask = (taskId, updateFields) => {
     setTasks((prev) =>
       prev.map((task) =>
-        task.id === taskId ? { ...task, ...updateFields } : task,
+        task.id === taskId
+          ? { ...task, ...updateFields }
+          : task,
       ),
     );
   };
 
+  // Open delete confirmation for one task
   const handleRequestDeleteTask = (taskId) => {
     setPendingDelete({ type: 'single', taskId });
   };
 
+  // Open delete confirmation for selected tasks
   const handleRequestDeleteSelected = () => {
     setPendingDelete({ type: 'multiple' });
   };
 
+  // Confirm deletion
   const handleConfirmDelete = () => {
     if (!pendingDelete) return;
 
-    if (pendingDelete?.type === 'single') {
+    if (pendingDelete.type === 'single') {
       handleDeleteTask(pendingDelete.taskId);
-    } else if (pendingDelete?.type === 'multiple') {
+    } else if (pendingDelete.type === 'multiple') {
       handleDeleteSelected();
     }
+
     setPendingDelete(null);
   };
 
+  // Cancel deletion
   const handleCancelDelete = () => {
     setPendingDelete(null);
   };
 
+  // Find task for confirmation dialog
   const taskToBeDeleted =
     pendingDelete?.type === 'single'
       ? tasks.find((task) => task.id === pendingDelete.taskId)
@@ -123,23 +150,21 @@ const App = () => {
 
   const dialogMessage =
     pendingDelete?.type === 'single'
-      ? `"${taskToBeDeleted.title}" will be removed. This cannot be undone.`
+      ? `"${taskToBeDeleted?.title ?? 'This task'}" will be removed. This cannot be undone.`
       : 'The selected tasks will be removed. This cannot be undone.';
 
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Ada&apos;s Task List</h1>
+        <h1>Ada's Task List</h1>
         <p>
           {taskCompleted.length} of {tasks.length} completed.
         </p>
       </header>
 
-      <main>
-        <TaskList tasks={tasks} />
-        <AddTask onAddTask={handleAddTask} />
       <main className="main-content">
         <h1>All Tasks</h1>
+
         <SelectAll
           totalCount={totalCount}
           selectedCount={selectedCount}
@@ -147,16 +172,18 @@ const App = () => {
           onMarkComplete={handleMarkComplete}
           onDeleteSelected={handleRequestDeleteSelected}
         />
-        <div>
-          <TaskList
-            tasks={tasks}
-            selectedIds={selectedIds}
-            onToggleSelect={handleToogleSelect}
-            onCompleteTask={handleCompleteTask}
-            onDeleteTask={handleRequestDeleteTask}
-            onEditTask={handleEditTask}
-          />
-        </div>
+
+        <TaskList
+          tasks={tasks}
+          selectedIds={selectedIds}
+          onToggleSelect={handleToogleSelect}
+          onCompleteTask={handleCompleteTask}
+          onDeleteTask={handleRequestDeleteTask}
+          onEditTask={handleEditTask}
+        />
+
+        <AddTask onAddTask={handleAddTask} />
+
         <ConfirmDialog
           isOpen={pendingDelete !== null}
           title={dialogTitle}
@@ -164,7 +191,6 @@ const App = () => {
           onConfirm={handleConfirmDelete}
           onCancel={handleCancelDelete}
         />
-        {/* Add a task component here */}
       </main>
     </div>
   );
