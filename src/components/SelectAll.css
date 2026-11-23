@@ -1,0 +1,97 @@
+.select-all-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 1.25rem;
+  background-color: #efefef;
+  border: 1px solid #d4d4d4;
+  border-radius: 10px;
+  font-family:
+    system-ui,
+    -apple-system,
+    sans-serif;
+}
+
+.select-all-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.select-all-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.select-all-checkbox {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  accent-color: #4b5563;
+  cursor: pointer;
+}
+
+.select-all-text {
+  font-weight: 700;
+  font-size: 1rem;
+  color: #111827;
+}
+
+.selected-count {
+  font-size: 0.95rem;
+  color: #4b5563;
+}
+
+.select-all-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.mark-complete-button,
+.delete-selected-button {
+  padding: 0.55rem 1rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    opacity 0.15s ease,
+    border-color 0.15s ease;
+}
+
+/* Outlined button */
+.mark-complete-button {
+  background-color: transparent;
+  color: #374151;
+  border: 1.5px solid #b8b8b8;
+}
+
+.mark-complete-button:hover:not(:disabled) {
+  background-color: #e5e5e5;
+  border-color: #9ca3af;
+}
+
+/* Solid button */
+.delete-selected-button {
+  background-color: #6b7280;
+  color: #ffffff;
+  border: 1.5px solid #6b7280;
+}
+
+.delete-selected-button:hover:not(:disabled) {
+  background-color: #4b5563;
+  border-color: #4b5563;
+}
+
+/* Disabled state (like "0 selected" in your screenshot) */
+.mark-complete-button:disabled,
+.delete-selected-button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
