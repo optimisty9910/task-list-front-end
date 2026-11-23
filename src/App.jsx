@@ -1,11 +1,30 @@
 import TaskList from './components/TaskList.jsx';
+import AddTask from './components/AddTask.jsx';
+import {useState} from 'react';
 import SelectAll from './components/SelectAll.jsx';
 import ConfirmDialog from './components/ConfirmDialog.jsx';
 import { taskData } from './TaskDATA.js';
 import { useState } from 'react';
 import './App.css';
+//import { describe } from 'vitest';
 
 const App = () => {
+  const [tasks, setTasks] = useState(TASKS);
+
+  const handleAddTask = (newTaskData) => {
+    const newTask = {
+      id: Date.now(),
+      title: newTaskData.title,
+      description: newTaskData.description,
+      isComplete: newTaskData.isComplete,
+    };
+
+    setTasks((previousTasks) => [
+      ...previousTasks,
+      newTask,
+    ]);
+  };
+
   const [tasks, setTasks] = useState(taskData);
   const taskCompleted = tasks.filter((task) => task.complete);
 
@@ -115,6 +134,10 @@ const App = () => {
           {taskCompleted.length} of {tasks.length} completed.
         </p>
       </header>
+
+      <main>
+        <TaskList tasks={tasks} />
+        <AddTask onAddTask={handleAddTask} />
       <main className="main-content">
         <h1>All Tasks</h1>
         <SelectAll

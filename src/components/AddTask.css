@@ -1,0 +1,48 @@
+  .add-task-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 90%;
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 25px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    text-align: left;
+  }
+
+  .add-task-form h2 {
+    margin-top: 0;
+  }
+
+  .add-task-form label {
+    display: block;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+
+  .add-task-form input,
+  .add-task-form textarea,
+  .add-task-form select {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #aaa;
+    border-radius: 6px;
+    font-size: 16px;
+  }
+
+  .add-task-form textarea {
+    min-height: 80px;
+    resize: vertical;
+  }
+
+  .add-task-form button {
+    width: 100%;
+    padding: 14px;
+    background: #252525;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }

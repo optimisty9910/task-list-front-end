@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 .App {
   text-align: center;
 }
@@ -28,6 +32,54 @@
   color: #61dafb;
 }
 
+
+.add-task-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 90%;
+  max-width: 900px;
+  padding: 25px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin: 30px auto;
+  text-align: left;
+}
+
+.add-task-form h2 {
+  margin-top: 0;
+}
+
+.add-task-form label {
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.add-task-form input,
+.add-task-form textarea,
+.add-task-form select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #aaa;
+  border-radius: 6px;
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+}
+
+.add-task-form textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.add-task-form button {
+  background: #252525;
+  color: white;
+  padding: 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 10px;
 .App-header p {
   margin: 0;
   font-size: 1rem;
