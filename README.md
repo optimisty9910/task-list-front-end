@@ -1,4 +1,6 @@
 # Task List Front End
+[![Python CI](https://github.com/optimisty9910/task-list-front-end/actions/workflows/react-ci.yml/badge.svg)](https://github.com/optimisty9910/task-list-front-end/actions/workflows/react-ci.yml)
+
 In this pair project, we will be working with state & events in React.  Then we will use the `useEffect` hook to update state from an API and persist state to an API with events.
 
 ## Learning Goals
