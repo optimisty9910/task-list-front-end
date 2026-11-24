@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+/*import { render, screen } from '@testing-library/react';
 import { vi } from 'vitest';
 import Task from './Task';
 
@@ -80,4 +80,51 @@ describe('Task', () => {
       'tasks__item__toggle--completed'
     );
   });
+});*/
+
+
+
+
+import { render, screen } from '@testing-library/react';
+import Task from './Task';
+
+describe('Task', () => {
+  const renderTask = (isComplete) => {
+    render(
+      <Task
+        id={1}
+        title="Test Title"
+        description="Test description"
+        isComplete={isComplete}
+        selectedIds={[]}
+        onToggleSelect={() => {}}
+        onCompleteTask={() => {}}
+        onDeleteTask={() => {}}
+        onEditTask={() => {}}
+      />
+    );
+  };
+
+  test('Renders title content', () => {
+    renderTask(true);
+
+    expect(screen.getByText('Test Title')).toBeInTheDocument();
+  });
+
+  test('Task has class "is-complete" if done is true', () => {
+    renderTask(true);
+
+    expect(screen.getByText('Test Title')).toHaveClass(
+      'task-title',
+      'is-complete'
+    );
+  });
+
+  test('Task does not have class "is-complete" if done is false', () => {
+    renderTask(false);
+
+    expect(screen.getByText('Test Title')).toHaveClass('task-title');
+    expect(screen.getByText('Test Title')).not.toHaveClass('is-complete');
+  });
 });
+

@@ -156,7 +156,7 @@ const App = () => {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Ada's Task List</h1>
+        <h1>Ada&#39;s Task List</h1>
         <p>
           {taskCompleted.length} of {tasks.length} completed.
         </p>
