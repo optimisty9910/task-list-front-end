@@ -3,7 +3,7 @@ import TaskList from './components/TaskList.jsx';
 import AddTask from './components/AddTask.jsx';
 import SelectAll from './components/SelectAll.jsx';
 import ConfirmDialog from './components/ConfirmDialog.jsx';
-import { taskData } from './TaskDATA.js';
+import { taskData } from './taskData.js';
 import './App.css';
 
 const App = () => {
