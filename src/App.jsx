@@ -3,7 +3,7 @@ import TaskList from './components/TaskList.jsx';
 import AddTask from './components/AddTask.jsx';
 import SelectAll from './components/SelectAll.jsx';
 import ConfirmDialog from './components/ConfirmDialog.jsx';
-import { taskData } from './TaskDATA.js';
+import { taskData } from './taskData.js';
 import './App.css';
 
 const App = () => {
@@ -156,7 +156,7 @@ const App = () => {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Ada's Task List</h1>
+        <h1>Ada&#39;s Task List</h1>
         <p>
           {taskCompleted.length} of {tasks.length} completed.
         </p>

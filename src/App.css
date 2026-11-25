@@ -80,6 +80,8 @@
   cursor: pointer;
   font-weight: bold;
   margin-top: 10px;
+}
+
 .App-header p {
   margin: 0;
   font-size: 1rem;
